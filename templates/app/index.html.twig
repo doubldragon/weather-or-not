@@ -8,13 +8,11 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/brandon/Code/personal/weather-or-not/src/Controller/AppController.php'|file_link(0) }}">src/Controller/AppController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/brandon/Code/personal/weather-or-not/templates/app/index.html.twig'|file_link(0) }}">templates/app/index.html.twig</a></code></li>
-    </ul>
+<div class="container container-fluid">
+   <div id="weather-app">
+       <div class="spinner-border" role="status">
+           <span class="sr-only">Loading...</span>
+       </div>
+   </div>
 </div>
 {% endblock %}
