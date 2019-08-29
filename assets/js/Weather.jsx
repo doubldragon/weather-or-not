@@ -4,30 +4,72 @@ class Weather extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            CurrentWeatherData: [],
-
-        }
+            currentWeatherData: null,
+            queryString: "",
+            geocodeKey: "AIzaSyDrjLW5bzv-_BqozBVr8kG843fVJ8OI_xw",
+            openWeatherKey: "58e92c763df5499a2c9ae20da806e2dc",
+        };
+        //NOTE: I would normally put the API Keys in the .env file to protect them, but added them here, for now, for ease of sharing the project
         this.getSearchBar = this.getSearchBar.bind(this);
         this.getActivePane = this.getActivePane.bind(this);
         this.getFavoriteContainers = this.getFavoriteContainers.bind(this);
+        this.updateQuery = this.updateQuery.bind(this);
+        this.getLocationData = this.getLocationData.bind(this);
+    }
+
+    updateQuery(e) {
+        console.log(e.target.value);
+        this.setState({queryString: e.target.value})
+    }
+
+    getLocationData() {
+        let coords;
+        fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + this.state.queryString + "&key=" + this.state.geocodeKey, {credentials: "same-origin"})
+            .then((response) => response.json()).then((responseJson) => {
+                if (responseJson.status == "OK") {
+                    coords = responseJson.results[0].geometry.location;
+                    console.log(coords);
+
+                }
+            fetch("http://api.openweathermap.org/data/2.5/weather?lat="+ coords.lat + "&lon=" + coords.lng + "&us&appid=" + this.state.openWeatherKey + "&units=imperial", {credentials: "same-origin"})
+                .then((response) => response.json()).then((responseJson) => {
+                console.log(responseJson);
+                this.setState({
+                    currentWeatherData: responseJson,
+                })
+            })
+                .catch((error) => {
+                    console.error(error);
+                });
+        })
+            .catch((error) => {
+                console.error(error);
+            });
+        // let param = isNaN(this.state.queryString) ? "q=" : "zip=";
+
     }
 
     getSearchBar() {
         return (
             <div className="search-bar input-group">
-                <input type="text" className="form-control" />
+                <div className="input-group-prepend">
+                    <button className="btn btn-secondary" type="button"><i className="fa fa-crosshairs"></i> </button>
+
+                </div>
+
+                <input type="text" className="form-control" onChange={this.updateQuery}/>
                 <div className="input-group-append">
-                    <button className="btn btn-primary" type="button">Button</button>
+                    <button className="btn btn-primary" type="button" onClick={this.getLocationData}>Button</button>
                 </div>
             </div>
         )
     }
 
     getActivePane () {
-        if (this.state.CurrentWeatherData.length > 0) {
+        if (this.state.currentWeatherData) {
             return (
                 <div className="card active-pane">
-                    <div className="card-body"> HOLA</div>
+                    <div className="card-body"> {this.state.currentWeatherData.main.temp}</div>
                 </div>
             );
         }
