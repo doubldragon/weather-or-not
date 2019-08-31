@@ -15,7 +15,6 @@ class ActiveContainer extends React.Component {
         let sunrise = utcString.slice(-11, -7);
         stamp = data.sys.sunset + data.timezone;
         utcString = new Date(stamp * 1000).toUTCString();
-        console.log(utcString);
         let sunset = utcString.slice(-12, -7);
         return (
             <div className="card active-pane" style={{backgroundColor:format.bgColor ? format.bgColor : '#cccccc'}}>

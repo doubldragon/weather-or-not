@@ -38,8 +38,15 @@ body {
 .fave-card {
   box-shadow: 5px 10px 18px #666666;
   cursor: pointer;
+  text-shadow: 2px 2px 4px #000000;
+  color: #fff;
+  font-size: 1.6em;
+  border: none;
   &:hover {
-    box-shadow: 5px 10px 18px #666666,0 0 20px gold inset;
+    box-shadow: 5px 10px 18px #666666,0 0 20px #AAAAAA inset;
+  }
+  .card-body {
+    padding-top:10px;
   }
 }
 
@@ -47,6 +54,10 @@ body {
 .weather-icon {
   font-size: 10em;
 
+}
+
+.fave-icon {
+  vertical-align: middle;
 }
 
 .card-columns {

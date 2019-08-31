@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Favorite;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,6 +17,17 @@ class AppController extends AbstractController
         return $this->render('app/index.html.twig', [
             'controller_name' => 'AppController',
         ]);
+    }
+
+    /**
+     * @Route("/api/user/favorites", methods={"GET"})
+     */
+
+    public function getUserFavorites() {
+        $favorites = [];
+        if ($this->getUser())
+            $favorites = $this->getDoctrine()->getRepository(Favorite::class)->getFavoritesByUser($this->getUser()->getId());
+        return new JsonResponse($favorites);
     }
 
     /**
@@ -135,4 +147,6 @@ class AppController extends AbstractController
             ]
         ], 200);
     }
+
+
 }
