@@ -29,6 +29,18 @@ class FavoriteRepository extends ServiceEntityRepository
             ->getQuery()->getResult();
     }
 
+    public function verifyNewFavorite($cityId, $userId) {
+        return $this->createQueryBuilder('f')
+            ->join('f.User', 'u')
+            ->where('u.id = :userId')
+            ->andWhere('f.city_id = :cityId')
+            ->setParameters([
+                'userId' => $userId,
+                'cityId' => $cityId,
+            ])
+            ->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Favorite[] Returns an array of Favorite objects
     //  */

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Favorite;
+use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,6 +29,25 @@ class AppController extends AbstractController
         if ($this->getUser())
             $favorites = $this->getDoctrine()->getRepository(Favorite::class)->getFavoritesByUser($this->getUser()->getId());
         return new JsonResponse($favorites);
+    }
+
+    /**
+     * @Route("/api/user/favorites/add", methods={"POST"})
+     */
+    public function addFavorite() {
+        if ($this->getUser()) {
+            $exists = $this->getDoctrine()->getRepository(Favorite::class)->verifyNewFavorite($_POST["cityId"], $this->getUser()->getId());
+            dump($exists);
+            if (!$exists) {
+                $fave = new Favorite();
+                $fave->setCityId($_POST["cityId"]);
+                $fave->setName($_POST["cityName"]);
+                $fave->setUser($this->getUser());
+                $this->getDoctrine()->getManager()->persist($fave);
+                $this->getDoctrine()->getManager()->flush();
+            }
+        }
+        return new JsonResponse("success", 200);
     }
 
     /**

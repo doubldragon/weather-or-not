@@ -27,6 +27,7 @@ class Weather extends React.Component {
         this.getWeatherFormats = this.getWeatherFormats.bind(this);
         this.getUserFavorites = this.getUserFavorites.bind(this);
         this.getFavoriteData = this.getFavoriteData.bind(this);
+        this.onSaveFavorite = this.onSaveFavorite.bind(this);
         // this.getUserFavorites = this.getUserFavorites.bind(this);
     }
 
@@ -35,6 +36,23 @@ class Weather extends React.Component {
         this.getUserFavorites();
     }
 
+    onSaveFavorite() {
+        let form = new FormData();
+        // console.log(this.state);
+        form.append("cityName", this.state.activeLocation);
+        form.append("cityId", this.state.currentWeatherData.id);
+        fetch("/api/user/favorites/add", {credentials: "same-origin",method: "post", body: form, encType: "multipart/form-data"})
+            .then((response) => response.json()).then((responseJson) => {
+            this.getUserFavorites();
+            this.setState()
+            console.log(responseJson);
+
+        })
+            .catch((error) => {
+                console.error(error);
+            });
+
+    }
     updateQuery(e) {
         console.log(e.target.value);
         this.setState({queryString: e.target.value})
@@ -111,38 +129,6 @@ class Weather extends React.Component {
             </div>
         )
     }
-    //
-    // getActivePane () {
-    //     let data = this.state.currentWeatherData;
-    //     let format = this.state.weatherFormats[data.weather[0].icon];
-    //     let stamp = data.sys.sunrise + data.timezone;
-    //     let utcString = new Date(stamp * 1000).toUTCString();
-    //     let sunrise = utcString.slice(-11, -7);
-    //     stamp = data.sys.sunset + data.timezone;
-    //     utcString = new Date(stamp * 1000).toUTCString();
-    //     console.log(utcString);
-    //     let sunset = utcString.slice(-12, -7);
-    //     console.log(sunrise);
-    //     console.log(sunset);
-    //     return (
-    //         <div className="card active-pane" style={{backgroundColor:format.bgColor ? format.bgColor : '#cccccc'}}>
-    //             <div className="card-body">
-    //                 <span className={"float-right"}>
-    //                     <i className={"weather-icon fas " + format.icon} style={{color:format.iconColor ? format.iconColor : '#ffffff'}}/>
-    //                 </span>
-    //                 <h1><div className={"active-text"}>{this.state.activeLocation[0]}</div></h1>
-    //                 <div><div className={"active-text temp-text"}>{Math.round(data.main.temp)}&#176;</div></div>
-    //                 <div className={"active-text"}>High: {Math.round(data.main.temp_max)}&#176;</div>
-    //                 <div className={"active-text"}>Low: {Math.round(data.main.temp_min)}&#176;</div>
-    //                 <div className={"active-text"}>Pressure: {Math.round(data.main.pressure)}</div>
-    //                 <div className={"active-text"}>Visibility: {Math.round(data.visibility/1609.344)} mi</div>
-    //                 <div className={"active-text"}>Sunrise: {sunrise} Sunset: {sunset}</div>
-    //                 <div className={"active-text"}>Wind: <i className={"fas fa-long-arrow-alt-up"} style={{transform:"rotate(" +data.wind.deg + "deg)",textShadow:"none"}}/> {Math.round(data.wind.deg)}mph</div>
-    //
-    //             </div>
-    //         </div>
-    //     );
-    // }
 
     getFavoriteData() {
         let containers = [];
@@ -159,23 +145,13 @@ class Weather extends React.Component {
                             this.setState({
                                 faveData: stateObj,
                             });
-                            {/*<FaveContainer*/
-                            }
-                            // data={responseJson}
-                            // format={this.state.weatherFormats[responseJson.weather[0].icon]}
-                            // name={fave.name}
-                            //     />
-                            // );
-                            // console.log(containers);
                         })
-                        // .done()
                         .catch((error) => {
                             console.error(error);
                         });
                 }
             });
         }
-        console.log(this.state.faveData);
         return containers;
     }
 
@@ -202,6 +178,7 @@ class Weather extends React.Component {
                         weatherData={this.state.currentWeatherData}
                         weatherFormat={this.state.weatherFormats[this.state.currentWeatherData.weather[0].icon]}
                         activeLocation={this.state.activeLocation}
+                        handleSaveFavorite={this.onSaveFavorite}
                     /> : ""}
                 <div className="fave-container card-columns">
                     {faves}

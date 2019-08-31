@@ -3,9 +3,12 @@ import React from 'react';
 class ActiveContainer extends React.Component {
     constructor(props) {
         super(props);
-
+        this.onSaveFavorite = this.onSaveFavorite.bind(this);
     }
 
+    onSaveFavorite() {
+        this.props.handleSaveFavorite();
+    }
 
     render() {
         let data = this.props.weatherData;
@@ -23,6 +26,7 @@ class ActiveContainer extends React.Component {
                         <i className={"weather-icon fas " + format.icon} style={{color:format.iconColor ? format.iconColor : '#ffffff'}}/>
                     </span>
                     <h1><div className={"active-text"}>{this.props.activeLocation[0]}</div></h1>
+                    <a href={"#"} className={"active-text"} onClick={this.onSaveFavorite}><i className="fas fa-plus" /> Add to Favorites</a>
                     <div><div className={"active-text temp-text"}>{Math.round(data.main.temp)}&#176;</div></div>
                     <div className={"active-text"}>High: {Math.round(data.main.temp_max)}&#176;</div>
                     <div className={"active-text"}>Low: {Math.round(data.main.temp_min)}&#176;</div>
