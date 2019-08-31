@@ -28,7 +28,7 @@ class Weather extends React.Component {
         this.getUserFavorites = this.getUserFavorites.bind(this);
         this.getFavoriteData = this.getFavoriteData.bind(this);
         this.onSaveFavorite = this.onSaveFavorite.bind(this);
-        // this.getUserFavorites = this.getUserFavorites.bind(this);
+        this.onRemoveFavorite = this.onRemoveFavorite.bind(this);
     }
 
     componentDidMount() {
@@ -44,14 +44,25 @@ class Weather extends React.Component {
         fetch("/api/user/favorites/add", {credentials: "same-origin",method: "post", body: form, encType: "multipart/form-data"})
             .then((response) => response.json()).then((responseJson) => {
             this.getUserFavorites();
-            this.setState()
             console.log(responseJson);
-
         })
             .catch((error) => {
                 console.error(error);
             });
+    }
 
+    onRemoveFavorite() {
+        console.log("let's remove it");
+        let form = new FormData();
+        form.append("cityId", this.state.currentWeatherData.id);
+        fetch("/api/user/favorites/remove/" + this.state.currentWeatherData.id, {credentials: "same-origin",method: "post"})
+            .then((response) => response.json()).then((responseJson) => {
+            this.getUserFavorites();
+            console.log(responseJson);
+        })
+            .catch((error) => {
+                console.error(error);
+            });
     }
     updateQuery(e) {
         console.log(e.target.value);
@@ -59,11 +70,14 @@ class Weather extends React.Component {
     }
 
     getUserFavorites() {
+        this.setState({
+            userFavorites:[]
+        });
         fetch("/api/user/favorites", {credentials: "same-origin"})
             .then((response) => response.json()).then((responseJson) => {
             this.setState({
                 userFavorites: responseJson,
-            })
+            });
             console.log(responseJson);
 
         })
@@ -157,19 +171,20 @@ class Weather extends React.Component {
 
     getFavoriteContainers() {
         let containers = [];
-            this.state.userFavorites.forEach((fave) => {
-                console.log('fave');
-                containers.push(<FaveContainer
-                    formats={this.state.weatherFormats}
-                    apiKey={this.state.openWeatherKey}
-                    data={fave}
-                />)
-            })
+        this.state.userFavorites.forEach((fave) => {
+            console.log('fave');
+            containers.push(<FaveContainer
+                formats={this.state.weatherFormats}
+                apiKey={this.state.openWeatherKey}
+                data={fave}
+            />)
+        })
         return containers;
     }
 
     render() {
         let faves = this.getFavoriteContainers();
+        let isFavorite = this.state.userFavorites.filter((fave) => fave.name === this.state.activeLocation[0]);
         return (
             <div className="app-container mt-3 col-8">
                 {this.getSearchBar()}
@@ -179,6 +194,8 @@ class Weather extends React.Component {
                         weatherFormat={this.state.weatherFormats[this.state.currentWeatherData.weather[0].icon]}
                         activeLocation={this.state.activeLocation}
                         handleSaveFavorite={this.onSaveFavorite}
+                        handleRemoveFavorite={this.onRemoveFavorite}
+                        isFavorite={isFavorite}
                     /> : ""}
                 <div className="fave-container card-columns">
                     {faves}

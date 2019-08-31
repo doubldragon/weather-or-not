@@ -36,7 +36,7 @@ class AppController extends AbstractController
      */
     public function addFavorite() {
         if ($this->getUser()) {
-            $exists = $this->getDoctrine()->getRepository(Favorite::class)->verifyNewFavorite($_POST["cityId"], $this->getUser()->getId());
+            $exists = $this->getDoctrine()->getRepository(Favorite::class)->findCityByUser($_POST["cityId"], $this->getUser()->getId());
             dump($exists);
             if (!$exists) {
                 $fave = new Favorite();
@@ -48,6 +48,21 @@ class AppController extends AbstractController
             }
         }
         return new JsonResponse("success", 200);
+    }
+
+    /**
+     * @Route("/api/user/favorites/remove/{cityId}", methods={"POST"})
+     */
+
+    public function removeFavorite($cityId) {
+        if ($this->getUser()) {
+            $favorite = $this->getDoctrine()->getRepository(Favorite::class)->findCityByUser($cityId, $this->getUser()->getId());
+            if($favorite)
+                $this->getDoctrine()->getManager()->remove($favorite[0]);
+            $this->getDoctrine()->getManager()->flush();
+        }
+        return new JsonResponse("success", 200);
+
     }
 
     /**

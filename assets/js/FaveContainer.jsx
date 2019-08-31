@@ -35,7 +35,7 @@ class FaveContainer extends React.Component {
         console.log(this.props.name);
         let format = this.props.formats[this.state.icon];
         return (
-            <div className="card fave-card" style={{backgroundColor:  format ? format.bgColor : "#cccccc"}}>
+            <div className="card fave-card" style={{backgroundColor:  format ? format.bgColor : "#cccccc"}} key={this.props.data.city_id}>
                 <div className="card-body" >
                     <div className={"active-text"}>{this.props.data.name} {format ? Math.round(this.state.weatherData.main.temp) : ""}&#176;
                         <i className={"fas fa-2x float-right fave-icon " + (format ? format.icon : "") } style={{color:(format ? format.iconColor : "#ffffff")}}/>

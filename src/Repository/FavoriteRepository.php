@@ -29,7 +29,7 @@ class FavoriteRepository extends ServiceEntityRepository
             ->getQuery()->getResult();
     }
 
-    public function verifyNewFavorite($cityId, $userId) {
+    public function findCityByUser($cityId, $userId) {
         return $this->createQueryBuilder('f')
             ->join('f.User', 'u')
             ->where('u.id = :userId')
