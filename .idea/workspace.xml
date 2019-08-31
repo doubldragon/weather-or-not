@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8b209847-4b31-416a-9425-f317f5d0840c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/js/ActiveContainer.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/js/FaveContainer.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/Weather.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/Weather.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/scss/main.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/scss/main.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AppController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AppController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -74,11 +69,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/js/FaveContainer.jsx">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="540">
-              <caret line="45" column="29" lean-forward="true" selection-start-line="45" selection-start-column="29" selection-end-line="45" selection-end-column="29" />
+              <caret line="45" column="29" selection-start-line="45" selection-start-column="29" selection-end-line="45" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Entity/Favorite.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="62" column="4" selection-start-line="62" selection-start-column="4" selection-end-line="62" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -145,6 +149,7 @@
         <option value="$PROJECT_DIR$/assets/js/index.jsx" />
         <option value="$PROJECT_DIR$/assets/js/Weather.jsx" />
         <option value="$PROJECT_DIR$/assets/js/FaveContainer.jsx" />
+        <option value="$PROJECT_DIR$/src/Entity/Favorite.php" />
       </list>
     </option>
   </component>
@@ -424,12 +429,12 @@
       <workItem from="1566838051413" duration="15683000" />
       <workItem from="1566934427092" duration="13804000" />
       <workItem from="1567083637784" duration="1083000" />
-      <workItem from="1567132239624" duration="19096000" />
+      <workItem from="1567132239624" duration="19654000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50501000" />
+    <option name="totallyTimeSpent" value="51059000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
@@ -671,7 +676,14 @@
     <entry file="file://$PROJECT_DIR$/assets/js/FaveContainer.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
-          <caret line="45" column="29" lean-forward="true" selection-start-line="45" selection-start-column="29" selection-end-line="45" selection-end-column="29" />
+          <caret line="45" column="29" selection-start-line="45" selection-start-column="29" selection-end-line="45" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/Favorite.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="62" column="4" selection-start-line="62" selection-start-column="4" selection-end-line="62" selection-end-column="4" />
         </state>
       </provider>
     </entry>
