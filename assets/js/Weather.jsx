@@ -3,6 +3,9 @@ import React from 'react';
 class Weather extends React.Component {
     constructor(props) {
         super(props);
+        /*
+        WRITE JSON FOR OPEN WEATHER CODE FOR CUSTOM ICONS/BACKGROUND COLORS
+         */
         this.state = {
             currentWeatherData: null,
             queryString: "",
@@ -23,13 +26,16 @@ class Weather extends React.Component {
     }
 
     getLocationData() {
+
         let coords;
         fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + this.state.queryString + "&key=" + this.state.geocodeKey, {credentials: "same-origin"})
             .then((response) => response.json()).then((responseJson) => {
                 if (responseJson.status == "OK") {
                     coords = responseJson.results[0].geometry.location;
-                    console.log(coords);
-
+                    console.log(responseJson.results[0].formatted_address);
+                    this.setState({
+                        queryString: responseJson.results[0].formatted_address
+                    })
                 }
             fetch("http://api.openweathermap.org/data/2.5/weather?lat="+ coords.lat + "&lon=" + coords.lng + "&us&appid=" + this.state.openWeatherKey + "&units=imperial", {credentials: "same-origin"})
                 .then((response) => response.json()).then((responseJson) => {
@@ -57,7 +63,7 @@ class Weather extends React.Component {
 
                 </div>
 
-                <input type="text" className="form-control" onChange={this.updateQuery}/>
+                <input type="text" className="form-control" value={this.state.queryString} onChange={this.updateQuery}/>
                 <div className="input-group-append">
                     <button className="btn btn-primary" type="button" onClick={this.getLocationData}>Button</button>
                 </div>
@@ -69,7 +75,11 @@ class Weather extends React.Component {
         if (this.state.currentWeatherData) {
             return (
                 <div className="card active-pane">
-                    <div className="card-body"> {this.state.currentWeatherData.main.temp}</div>
+                    <div className="card-body">
+                        {this.state.currentWeatherData.main.temp}
+                        <i className="fas fa-cloud-sun fa-5x"></i>
+                        <img className="weather-icon" src={"http://openweathermap.org/img/wn/" + this.state.currentWeatherData.weather[0].icon + ".png"} />
+                    </div>
                 </div>
             );
         }
