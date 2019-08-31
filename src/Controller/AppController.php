@@ -19,68 +19,70 @@ class AppController extends AbstractController
     }
 
     /**
-     * @Route('/api/weather/formats', name="getWeatherFormats")
+     * @Route("/api/weather/formats", name="getWeatherFormats")
      */
     public function getWeatherFormats() {
+
         //Under normal circumstances, this information would be contained in the database and editable via dashboard
         return new JsonResponse([
             "01d" => [
                 "icon" => "fa-sun",
-                "iconColor" => "",
-                "bgColor" => "",
+                "iconColor" => "#f0ec00",
+                "bgColor" => "#0092ed",
                 "textColor" => ""
             ],
             "01n" => [
                 "icon" => "fa-moon",
-                "iconColor" => "",
-                "bgColor" => "",
+                "iconColor" => "#ffffff",
+                "bgColor" => "#080340",
                 "textColor" => ""
             ],
             "02d" => [
                 "icon" => "fa-cloud-sun",
-                "iconColor" => "",
-                "bgColor" => "",
+                "iconColor" => "#ffffff",
+                "bgColor" => "#3a8bbd",
                 "textColor" => ""
             ],
             "02n" => [
                 "icon" => "fa-cloud-moon",
-                "iconColor" => "",
-                "bgColor" => "",
+                "iconColor" => "#ffffff",
+                "bgColor" => "#080340",
                 "textColor" => ""
             ],
             "03d" => [
                 "icon" => "fa-cloud-sun",
-                "iconColor" => "",
-                "bgColor" => "",
+                "iconColor" => "#ffffff",
+                "bgColor" => "#3a8bbd",
                 "textColor" => ""
             ],
             "03n" => [
                 "icon" => "fa-cloud-moon",
                 "iconColor" => "",
-                "bgColor" => "",
+                "bgColor" => "#080340",
                 "textColor" => ""
             ],
             "04d" => [
                 "icon" => "fa-cloud",
                 "iconColor" => "",
-                "bgColor" => "",
+                "bgColor" => "#63696e",
                 "textColor" => ""
             ],
             "04n" => [
                 "icon" => "fa-cloud",
-                "bgColor" => "",
+                "iconColor" => "",
+                "bgColor" => "#080340",
                 "textColor" => ""
             ],
             "09d" => [
                 "icon" => "fa-cloud-showers-heavy",
                 "iconColor" => "",
-                "bgColor" => "",
+                "bgColor" => "#63696e",
                 "textColor" => ""
             ],
             "09n" => [
                 "icon" => "fa-cloud-showers-heavy",
                 "iconColor" => "",
-                "bgColor" => "",
+                "bgColor" => "#63696e",
                 "textColor" => ""
             ],
             "10d" => [
@@ -98,35 +100,23 @@ class AppController extends AbstractController
             "11d" => [
                 "icon" => "fa-poo-storm",
                 "iconColor" => "",
-                "bgColor" => "",
+                "bgColor" => "#63696e",
                 "textColor" => ""
             ],
             "11n" => [
                 "icon" => "fa-poo-storm",
                 "iconColor" => "",
-                "bgColor" => "",
-                "textColor" => ""
-            ],
-            "12d" => [
-                "icon" => "fa-snowflake",
-                "iconColor" => "",
-                "bgColor" => "",
-                "textColor" => ""
-            ],
-            "12n" => [
-                "icon" => "fa-snowflake",
-                "iconColor" => "",
-                "bgColor" => "",
+                "bgColor" => "#63696e",
                 "textColor" => ""
             ],
             "13d" => [
-                "icon" => "fa-sun",
+                "icon" => "fa-snowflake",
                 "iconColor" => "",
-                "bgColor" => "",
+                "bgColor" => "#3a8bbd",
                 "textColor" => ""
             ],
             "13n" => [
-                "icon" => "fa-sun",
+                "icon" => "fa-snowflake",
                 "iconColor" => "",
                 "bgColor" => "",
                 "textColor" => ""
@@ -134,15 +124,15 @@ class AppController extends AbstractController
             "50d" => [
                 "icon" => "fa-smog",
                 "iconColor" => "",
-                "bgColor" => "",
+                "bgColor" => "#63696e",
                 "textColor" => ""
             ],
             "50n" => [
                 "icon" => "fa-smog",
                 "iconColor" => "",
-                "bgColor" => "",
+                "bgColor" => "#63696e",
                 "textColor" => ""
             ]
-        ]);
+        ], 200);
     }
 }
