@@ -159,6 +159,16 @@ class Weather extends React.Component {
 
     getFavoriteContainers() {
         let containers = [];
+        if(this.state.userFavorites.length > 0) {
+            fetch("/api/openweather/bulk/" + JSON.stringify(this.state.userFavorites), {credentials: "same-origin"})
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    console.log(responseJson)
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
         this.state.userFavorites.forEach((fave) => {
             containers.push(<FaveContainer
                 key={fave.city_id}
@@ -170,6 +180,7 @@ class Weather extends React.Component {
         });
         return containers;
     }
+
 
     render() {
         let faves = this.getFavoriteContainers();

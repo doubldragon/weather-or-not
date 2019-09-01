@@ -81,6 +81,23 @@ class AppController extends AbstractController
                 $urlString .= "lat=" . $coords[0] . "&lon=" . $coords[1];
 
             }
+            else if ($paramType == "bulk") {
+                $urlString = "http://api.openweathermap.org/data/2.5/group?units=imperial&us&appid=" . $_ENV["OPEN_WEATHER_KEY"] . "&id=";
+                $favorites = [];
+                if ($this->getUser())
+                    $favorites = $this->getDoctrine()->getRepository(Favorite::class)->getFavoritesByUser($this->getUser()->getId());
+                $bulkList = "";
+                $i=1;
+                foreach($favorites as $fave) {
+                    $bulkList .= $fave["city_id"];
+                    if ($i < count($favorites))
+                        $bulkList .= ",";
+                    $i++;
+                }
+
+                $urlString .= $bulkList;
+                dump($urlString);
+            }
 
             $response = $guzzle->request("GET", $urlString);
             $response = json_decode($response->getBody()->getContents());
