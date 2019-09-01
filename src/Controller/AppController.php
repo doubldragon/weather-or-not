@@ -7,6 +7,7 @@ use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use GuzzleHttp;
 
 class AppController extends AbstractController
 {
@@ -61,6 +62,43 @@ class AppController extends AbstractController
         }
         return new JsonResponse("success", 200);
 
+    }
+
+    /**
+     * @Route("/api/openweather/{paramType}/{params}")
+     */
+
+    public function getDataFromOpenWeather($paramType, $params) {
+        $response = [];
+        if ($params) {
+            $guzzle = new GuzzleHttp\Client();
+            $urlString = "http://api.openweathermap.org/data/2.5/weather?units=imperial&us&appid=" . $_ENV["OPEN_WEATHER_KEY"] . "&";
+            if ($paramType == "city") {
+                $urlString .= "id=" . $params;
+            }
+            else if ($paramType == "latlng") {
+                $coords = explode(" ", $params);
+                $urlString .= "lat=" . $coords[0] . "&lon=" . $coords[1];
+
+            }
+
+            $response = $guzzle->request("GET", $urlString);
+            $response = json_decode($response->getBody()->getContents());
+        }
+        return new JsonResponse($response);
+
+    }
+
+    /**
+     * @Route("/api/geocode/{params}")
+     */
+
+    public function geocodeLocation($params) {
+        $urlString = "https://maps.googleapis.com/maps/api/geocode/json?key=" . $_ENV["GOOGLE_GEOCODE_KEY"] . "&address=" . $params;
+        $guzzle = new GuzzleHttp\Client();
+        $response = $guzzle->request("GET", $urlString);
+        $response = json_decode($response->getBody()->getContents());
+        return new JsonResponse($response);
     }
 
     /**

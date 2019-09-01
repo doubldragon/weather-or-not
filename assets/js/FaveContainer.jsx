@@ -20,7 +20,9 @@ class FaveContainer extends React.Component {
     }
 
     getLocationData() {
-        fetch("http://api.openweathermap.org/data/2.5/weather?id=" + this.props.data.city_id + "&appid=" + this.props.apiKey + "&units=imperial", {credentials: "same-origin"})
+        // fetch("http://api.openweathermap.org/data/2.5/weather?id=" + this.props.data.city_id + "&appid=" + this.props.apiKey + "&units=imperial", {credentials: "same-origin"})
+
+        fetch("/api/openweather/city/" + this.props.data.city_id, {credentials: "same-origin"})
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({

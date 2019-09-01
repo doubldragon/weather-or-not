@@ -9,14 +9,13 @@ class Weather extends React.Component {
             currentWeatherData: null,
             queryString: "",
             activeLocation: "",
-            geocodeKey: "AIzaSyDrjLW5bzv-_BqozBVr8kG843fVJ8OI_xw",
-            openWeatherKey: "58e92c763df5499a2c9ae20da806e2dc",
+            // geocodeKey: "",
+            // openWeatherKey: "",
             weatherFormats: [],
             userFavorites: [],
             faveData: {},
         };
 
-        //NOTE: I would normally put the API Keys in the .env file to protect them, but added them here, for now, for ease of sharing the project
         this.getSearchBar = this.getSearchBar.bind(this);
         this.getFavoriteContainers = this.getFavoriteContainers.bind(this);
         this.updateQuery = this.updateQuery.bind(this);
@@ -30,6 +29,7 @@ class Weather extends React.Component {
     }
 
     componentDidMount() {
+        // this.getAPICredentials();
         this.getWeatherFormats();
         this.getUserFavorites();
     }
@@ -56,7 +56,7 @@ class Weather extends React.Component {
     }
 
     getOpenWeatherData(lat, lng, source) {
-        fetch("http://api.openweathermap.org/data/2.5/weather?lat="+ lat + "&lon=" + lng + "&us&appid=" + this.state.openWeatherKey + "&units=imperial", {credentials: "same-origin"})
+        fetch("/api/openweather/latlng/" + lat + "%20" + lng, {credentials: "same-origin"})
             .then((response) => response.json()).then((responseJson) => {
                 let location = source === "google" ? this.state.activeLocation : [responseJson.name];
                 this.setState({
@@ -125,7 +125,8 @@ class Weather extends React.Component {
 
     getLocationData() {
         let coords;
-        fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + this.state.queryString + "&key=" + this.state.geocodeKey, {credentials: "same-origin"})
+        fetch("/api/geocode/" + this.state.queryString, {credentials: "same-origin"})
+        // fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + this.state.queryString + "&key=" + this.state.geocodeKey, {credentials: "same-origin"})
             .then((response) => response.json()).then((responseJson) => {
                 if (responseJson.status == "OK") {
                      coords = responseJson.results[0].geometry.location;

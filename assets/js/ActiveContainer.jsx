@@ -16,13 +16,11 @@ class ActiveContainer extends React.Component {
     }
 
     render() {
-        console.log(this.props.isFavorite);
         let data = this.props.weatherData;
         let description = data.weather[0].description.toLowerCase()
             .split(' ')
             .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
             .join(' ');
-        console.log(data);
         let format = this.props.weatherFormat;
         let stamp = data.sys.sunrise + data.timezone;
         let utcString = new Date(stamp * 1000).toUTCString();
