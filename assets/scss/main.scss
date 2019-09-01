@@ -38,7 +38,9 @@ body {
   }
 
 }
-
+.data-grid {
+  display:inline-block;
+}
 .fave-container {
   margin-top: 15px;
   padding-bottom: 15px;
@@ -85,7 +87,7 @@ body {
     column-count: 1;
   }
   @include media-breakpoint-only(md) {
-    column-count: 1;
+    column-count: 2;
   }
   @include media-breakpoint-only(xl) {
     column-count: 2;
