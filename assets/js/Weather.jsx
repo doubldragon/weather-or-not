@@ -5,9 +5,6 @@ import FaveContainer from './FaveContainer.jsx';
 class Weather extends React.Component {
     constructor(props) {
         super(props);
-        /*
-        WRITE JSON FOR OPEN WEATHER CODE FOR CUSTOM ICONS/BACKGROUND COLORS
-         */
         this.state = {
             currentWeatherData: null,
             queryString: "",
@@ -18,6 +15,7 @@ class Weather extends React.Component {
             userFavorites: [],
             faveData: {},
         };
+
         //NOTE: I would normally put the API Keys in the .env file to protect them, but added them here, for now, for ease of sharing the project
         this.getSearchBar = this.getSearchBar.bind(this);
         this.getFavoriteContainers = this.getFavoriteContainers.bind(this);
@@ -25,7 +23,6 @@ class Weather extends React.Component {
         this.getLocationData = this.getLocationData.bind(this);
         this.getWeatherFormats = this.getWeatherFormats.bind(this);
         this.getUserFavorites = this.getUserFavorites.bind(this);
-        this.getFavoriteData = this.getFavoriteData.bind(this);
         this.onSaveFavorite = this.onSaveFavorite.bind(this);
         this.onRemoveFavorite = this.onRemoveFavorite.bind(this);
         this.setToActive = this.setToActive.bind(this);
@@ -39,7 +36,7 @@ class Weather extends React.Component {
 
     setToActive(data, weatherData) {
         this.setState({
-            activeLocation: [data.name],
+            activeLocation: data.name,
             currentWeatherData: weatherData
         })
     }
@@ -62,11 +59,9 @@ class Weather extends React.Component {
         fetch("http://api.openweathermap.org/data/2.5/weather?lat="+ lat + "&lon=" + lng + "&us&appid=" + this.state.openWeatherKey + "&units=imperial", {credentials: "same-origin"})
             .then((response) => response.json()).then((responseJson) => {
                 let location = source === "google" ? this.state.activeLocation : [responseJson.name];
-                // let query = source === "google" ? responseJson.results[0].formatted_address : this.state.queryString
             this.setState({
                 currentWeatherData: responseJson,
                 activeLocation: location[0],
-                // queryString: query,
             })
         })
             .catch((error) => {
@@ -88,8 +83,6 @@ class Weather extends React.Component {
     }
 
     onRemoveFavorite() {
-        let form = new FormData();
-        form.append("cityId", this.state.currentWeatherData.id);
         fetch("/api/user/favorites/remove/" + this.state.currentWeatherData.id, {credentials: "same-origin",method: "post"})
             .then((response) => response.json()).then((responseJson) => {
             this.getUserFavorites();
@@ -98,6 +91,7 @@ class Weather extends React.Component {
                 console.error(error);
             });
     }
+
     updateQuery(e) {
         this.setState({queryString: e.target.value})
     }
@@ -111,7 +105,6 @@ class Weather extends React.Component {
             this.setState({
                 userFavorites: responseJson,
             });
-
         })
             .catch((error) => {
                 console.error(error);
@@ -135,28 +128,18 @@ class Weather extends React.Component {
         fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + this.state.queryString + "&key=" + this.state.geocodeKey, {credentials: "same-origin"})
             .then((response) => response.json()).then((responseJson) => {
                 if (responseJson.status == "OK") {
-                    coords = responseJson.results[0].geometry.location;
+                     coords = responseJson.results[0].geometry.location;
                     this.setState({
                         queryString: responseJson.results[0].formatted_address,
                         activeLocation: responseJson.results[0].formatted_address.split(",", 1)
-                    })
+                    },
+                        this.getOpenWeatherData(coords.lat,coords.lng, "google")
+                    )
                 }
-                this.getOpenWeatherData(coords.lat,coords.lng, "google");
-            // fetch("http://api.openweathermap.org/data/2.5/weather?lat="+ coords.lat + "&lon=" + coords.lng + "&us&appid=" + this.state.openWeatherKey + "&units=imperial", {credentials: "same-origin"})
-            //     .then((response) => response.json()).then((responseJson) => {
-            //     this.setState({
-            //         currentWeatherData: responseJson,
-            //     })
-            // })
-            //     .catch((error) => {
-            //         console.error(error);
-            //     });
         })
             .catch((error) => {
                 console.error(error);
             });
-        // let param = isNaN(this.state.queryString) ? "q=" : "zip=";
-
     }
 
     getSearchBar() {
@@ -164,38 +147,13 @@ class Weather extends React.Component {
             <div className="search-bar input-group">
                 <div className="input-group-prepend">
                     <button className="btn btn-secondary" type="button" onClick={this.getBrowserLocation}><i className="fa fa-crosshairs"></i> </button>
-
                 </div>
-
                 <input type="text" className="form-control" value={this.state.queryString} onChange={this.updateQuery}/>
                 <div className="input-group-append">
                     <button className="btn btn-primary" type="button" onClick={this.getLocationData}>Search</button>
                 </div>
             </div>
         )
-    }
-
-    getFavoriteData() {
-        let containers = [];
-        if(!this.state.userFavorites ) {
-            this.state.userFavorites.forEach((fave) => {
-                if (!this.state.faveData.keys.find(fave.name)) {
-                    fetch("http://api.openweathermap.org/data/2.5/weather?id=" + fave.city_id + "&appid=" + this.state.openWeatherKey + "&units=imperial", {credentials: "same-origin"})
-                        .then((response) => response.json())
-                        .then((responseJson) => {
-                            let stateObj = this.state.faveData;
-                            stateObj[fave.name] = responseJson;
-                            this.setState({
-                                faveData: stateObj,
-                            });
-                        })
-                        .catch((error) => {
-                            console.error(error);
-                        });
-                }
-            });
-        }
-        return containers;
     }
 
     getFavoriteContainers() {
@@ -208,13 +166,12 @@ class Weather extends React.Component {
                 data={fave}
                 onSelect={this.setToActive}
             />)
-        })
+        });
         return containers;
     }
 
     render() {
         let faves = this.getFavoriteContainers();
-        let isFavorite = this.state.userFavorites.filter((fave) => fave.name === this.state.activeLocation);
         return (
             <div key="app" className="app-container mt-3 col-lg-8 col-xl-8 col-md-12 col-sm-12 col-xs-12">
                 {this.getSearchBar()}
@@ -225,7 +182,7 @@ class Weather extends React.Component {
                         activeLocation={this.state.activeLocation}
                         handleSaveFavorite={this.onSaveFavorite}
                         handleRemoveFavorite={this.onRemoveFavorite}
-                        isFavorite={isFavorite}
+                        isFaveLocation={this.state.userFavorites.filter((fave) => fave.name === this.state.activeLocation)}
                     /> : ""}
                 <div className="fave-container card-columns">
                     {faves}

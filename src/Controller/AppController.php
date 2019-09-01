@@ -23,7 +23,6 @@ class AppController extends AbstractController
     /**
      * @Route("/api/user/favorites", methods={"GET"})
      */
-
     public function getUserFavorites() {
         $favorites = [];
         if ($this->getUser())
@@ -37,7 +36,6 @@ class AppController extends AbstractController
     public function addFavorite() {
         if ($this->getUser()) {
             $exists = $this->getDoctrine()->getRepository(Favorite::class)->findCityByUser($_POST["cityId"], $this->getUser()->getId());
-            dump($exists);
             if (!$exists) {
                 $fave = new Favorite();
                 $fave->setCityId($_POST["cityId"]);
