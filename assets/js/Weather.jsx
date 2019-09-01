@@ -59,11 +59,11 @@ class Weather extends React.Component {
         fetch("http://api.openweathermap.org/data/2.5/weather?lat="+ lat + "&lon=" + lng + "&us&appid=" + this.state.openWeatherKey + "&units=imperial", {credentials: "same-origin"})
             .then((response) => response.json()).then((responseJson) => {
                 let location = source === "google" ? this.state.activeLocation : [responseJson.name];
-            this.setState({
-                currentWeatherData: responseJson,
-                activeLocation: location[0],
+                this.setState({
+                    currentWeatherData: responseJson,
+                    activeLocation: location[0],
+                })
             })
-        })
             .catch((error) => {
                 console.error(error);
             });
@@ -146,11 +146,11 @@ class Weather extends React.Component {
         return (
             <div className="search-bar input-group">
                 <div className="input-group-prepend">
-                    <button className="btn btn-secondary" type="button" onClick={this.getBrowserLocation}><i className="fa fa-crosshairs"></i> </button>
+                    <button className="btn " type="button" onClick={this.getBrowserLocation}><i className="fa fa-crosshairs"></i> </button>
                 </div>
                 <input type="text" className="form-control" value={this.state.queryString} onChange={this.updateQuery}/>
                 <div className="input-group-append">
-                    <button className="btn btn-secondary" type="button" onClick={this.getLocationData}>Search</button>
+                    <button className="btn " type="button" onClick={this.getLocationData}>Search</button>
                 </div>
             </div>
         )
