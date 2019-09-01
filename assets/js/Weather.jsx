@@ -150,7 +150,7 @@ class Weather extends React.Component {
                 </div>
                 <input type="text" className="form-control" value={this.state.queryString} onChange={this.updateQuery}/>
                 <div className="input-group-append">
-                    <button className="btn btn-primary" type="button" onClick={this.getLocationData}>Search</button>
+                    <button className="btn btn-secondary" type="button" onClick={this.getLocationData}>Search</button>
                 </div>
             </div>
         )
