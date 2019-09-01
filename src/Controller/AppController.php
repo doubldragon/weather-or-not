@@ -135,13 +135,13 @@ class AppController extends AbstractController
             "10d" => [
                 "icon" => "fa-cloud-sun-rain",
                 "iconColor" => "",
-                "bgColor" => "",
+                "bgColor" => "#aaaaaa",
                 "textColor" => ""
             ],
             "10n" => [
                 "icon" => "fa-cloud-moon-rain",
                 "iconColor" => "",
-                "bgColor" => "",
+                "bgColor" => "#cccccc",
                 "textColor" => ""
             ],
             "11d" => [

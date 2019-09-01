@@ -34,7 +34,7 @@ class ActiveContainer extends React.Component {
                     <span className={"float-right"}>
                         <i className={"weather-icon fas " + format.icon} style={{color:format.iconColor ? format.iconColor : '#ffffff'}}/>
                     </span>
-                    <h1><div className={"active-text"}>{this.props.activeLocation[0]}</div></h1>
+                    <h1><div className={"active-text"}>{this.props.activeLocation}</div></h1>
                     {isFavorite}
                     <div><div className={"active-text temp-text"}>{Math.round(data.main.temp)}&#176;</div></div>
                     <div className={"active-text"}>High: {Math.round(data.main.temp_max)}&#176;</div>
