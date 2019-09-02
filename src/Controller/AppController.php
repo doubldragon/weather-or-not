@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Favorite;
 use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Tests\Compiler\J;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use GuzzleHttp;
@@ -85,6 +86,8 @@ class AppController extends AbstractController
                 $favorites = [];
                 if ($this->getUser())
                     $favorites = $this->getDoctrine()->getRepository(Favorite::class)->getFavoritesByUser($this->getUser()->getId());
+                else
+                    return new JsonResponse([],200);
                 $bulkList = "";
                 $i=1;
                 foreach($favorites as $fave) {

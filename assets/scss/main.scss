@@ -2,12 +2,11 @@
 
 body {
   background-color: #808080;
-  //background-color: #040305;
   background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
-  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
 #weather-app {
   margin: 0 auto;
+  color: #fff;
 }
 
 .btn{
@@ -77,6 +76,14 @@ body {
   height: 100px;
   width: 100px;
 
+}
+
+.center-text {
+  text-shadow: 2px 2px 4px #000000;
+
+  margin: 0 auto;
+  width: fit-content;
+  font-size: 1.5em;
 }
 
 .fave-icon {

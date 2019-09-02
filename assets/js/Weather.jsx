@@ -127,7 +127,6 @@ class Weather extends React.Component {
     getLocationData() {
         let coords;
         fetch("/api/geocode/" + this.state.queryString, {credentials: "same-origin"})
-        // fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + this.state.queryString + "&key=" + this.state.geocodeKey, {credentials: "same-origin"})
             .then((response) => response.json()).then((responseJson) => {
                 if (responseJson.status === "OK") {
                      coords = responseJson.results[0].geometry.location;
@@ -162,9 +161,11 @@ class Weather extends React.Component {
             fetch("/api/openweather/bulk/faves", {credentials: "same-origin"})
                 .then((response) => response.json())
                 .then((responseJson) => {
-                    this.setState({
-                        faveData: responseJson.list,
-                    })
+                    if (responseJson.length > 0) {
+                        this.setState({
+                            faveData: responseJson.list,
+                        })
+                    }
                 })
                 .catch((error) => {
                     console.error(error);
@@ -173,7 +174,7 @@ class Weather extends React.Component {
 
     getFavoriteContainers() {
         let containers = [];
-        if (this.state.faveData.length === this.state.userFavorites.length) {
+        if (this.state.faveData.length === this.state.userFavorites.length && this.state.userFavorites.length > 0) {
             this.state.userFavorites.forEach((fave) => {
                 containers.push(<FaveContainer
                     key={fave.city_id}
@@ -183,27 +184,32 @@ class Weather extends React.Component {
                     onSelect={this.setToActive}
                 />)
             });
+            return <div className="fave-container card-columns">{containers}</div>
+
+            }
+        else {
+            return <div className={"center-text active-text"}><small>Please log in to save your favorite locations</small></div>;
+
         }
-        return containers;
     }
 
     render() {
         let faves = this.getFavoriteContainers();
+        let icon = this.state.currentWeatherData ? this.state.currentWeatherData.weather[0].icon : 0;
         return (
             <div key="app" className="app-container mt-3 col-lg-8 col-xl-8 col-md-12 col-sm-12 col-xs-12">
                 {this.getSearchBar()}
-                {this.state.currentWeatherData ?
-                    <ActiveContainer
-                        weatherData={this.state.currentWeatherData}
-                        weatherFormat={this.state.weatherFormats[this.state.currentWeatherData.weather[0].icon]}
-                        activeLocation={this.state.activeLocation}
-                        handleSaveFavorite={this.onSaveFavorite}
-                        handleRemoveFavorite={this.onRemoveFavorite}
-                        isFaveLocation={this.state.userFavorites.filter((fave) => fave.name === this.state.activeLocation)}
-                    /> : ""}
-                <div className="fave-container card-columns">
-                    {faves}
-                </div>
+                <ActiveContainer
+                    weatherData={this.state.currentWeatherData}
+                    weatherFormat={this.state.weatherFormats[icon]}
+                    activeLocation={this.state.activeLocation}
+                    handleSaveFavorite={this.onSaveFavorite}
+                    handleRemoveFavorite={this.onRemoveFavorite}
+                    isFaveLocation={this.state.userFavorites.filter((fave) => fave.name === this.state.activeLocation)}
+                />
+                <hr/>
+                <div className={"center-text active-text"}>My Places</div>
+                {faves}
             </div>
         )
     }
