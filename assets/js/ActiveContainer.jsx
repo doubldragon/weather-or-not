@@ -22,10 +22,11 @@ class ActiveContainer extends React.Component {
             .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
             .join(' ');
         let format = this.props.weatherFormat;
-        let stamp = data.sys.sunrise + data.timezone;
+        let timezone = data.timezone ? data.timezone : data.sys.timezone;
+        let stamp = data.sys.sunrise + timezone;
         let utcString = new Date(stamp * 1000).toUTCString();
         let sunrise = utcString.slice(-11, -7);
-        stamp = data.sys.sunset + data.timezone;
+        stamp = data.sys.sunset + timezone;
         utcString = new Date(stamp * 1000).toUTCString();
         let sunset = utcString.slice(-12, -7);
         let faveLink = <a href={"#"} className={" col-xs-12 col-sm-12 active-text"} onClick={this.onSaveFavorite}><small><i className="fas fa-plus" /> Add to Favorites</small></a>;

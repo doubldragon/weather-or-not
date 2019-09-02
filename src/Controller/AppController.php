@@ -79,7 +79,6 @@ class AppController extends AbstractController
             else if ($paramType == "latlng") {
                 $coords = explode(" ", $params);
                 $urlString .= "lat=" . $coords[0] . "&lon=" . $coords[1];
-
             }
             else if ($paramType == "bulk") {
                 $urlString = "http://api.openweathermap.org/data/2.5/group?units=imperial&us&appid=" . $_ENV["OPEN_WEATHER_KEY"] . "&id=";
@@ -94,9 +93,7 @@ class AppController extends AbstractController
                         $bulkList .= ",";
                     $i++;
                 }
-
                 $urlString .= $bulkList;
-                dump($urlString);
             }
 
             $response = $guzzle->request("GET", $urlString);
