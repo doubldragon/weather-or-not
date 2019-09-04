@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8b209847-4b31-416a-9425-f317f5d0840c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/ActiveContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/ActiveContainer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/Weather.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/Weather.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/scss/main.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/scss/main.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AppController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AppController.php" afterDir="false" />
-    </list>
+    <list default="true" id="8b209847-4b31-416a-9425-f317f5d0840c" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -300,10 +294,10 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="298" />
-    <option name="y" value="158" />
-    <option name="width" value="1391" />
-    <option name="height" value="791" />
+    <option name="x" value="1920" />
+    <option name="y" value="-2" />
+    <option name="width" value="1920" />
+    <option name="height" value="1082" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -421,11 +415,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="100822000" />
+    <option name="totallyTimeSpent" value="101523000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
-    <editor active="true" />
+    <frame x="1987" y="25" width="1853" height="1055" extended-state="6" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26342005" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
