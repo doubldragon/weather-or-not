@@ -20,7 +20,7 @@ class ActiveContainer extends React.Component {
 
         if (this.props.activeLocation) {
             let data = this.props.weatherData;
-            let description = data.weather[0].description.toLowerCase()
+            let description = (data.weather ? data.weather[0].description.toLowerCase() : "")
                 .split(' ')
                 .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
                 .join(' ');
