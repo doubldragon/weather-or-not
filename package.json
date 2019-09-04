@@ -1,7 +1,7 @@
 {
 
-    "name": "myapp",
-    "description": "a really cool app",
+    "name": "weather-or-not",
+    "description": "check the weather",
     "version": "0.0.1",
     "engines": {
         "npm": "3.5.2",
@@ -23,7 +23,6 @@
         "heroku-postbuild": "webpack -p --config ./resources/webpack/webpack.config.js"
     },
     "dependencies": {
-
         "@babel/cli": "^7.0.0-beta.40",
         "@babel/core": "^7.0.0-beta.40",
         "@babel/preset-react": "^7.0.0-beta.40",
