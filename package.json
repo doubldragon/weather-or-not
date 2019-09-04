@@ -4,7 +4,6 @@
     "description": "check the weather",
     "version": "0.0.1",
     "engines": {
-        "npm": "3.5.2",
         "node": "8.10.0"
     },
     "devDependencies": {
