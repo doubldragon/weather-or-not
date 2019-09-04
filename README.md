@@ -38,8 +38,8 @@ MVP
         - To preview the command, use --dump-sql instead of --force
       - bin/console server:start to open a localhost server
       - npm run watch to compile assets
-      
- 
+  - Deployment
+    - Project also deployed to heroku
         
  - Notes
    - Getting good geocoding information, conducting fuzzy location searches, and returning multiple results
