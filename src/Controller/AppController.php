@@ -71,9 +71,10 @@ class AppController extends AbstractController
 
     public function getDataFromOpenWeather($paramType, $params) {
         $response = [];
+        $openKey = "58e92c763df5499a2c9ae20da806e2dc";
         if ($params) {
             $guzzle = new GuzzleHttp\Client();
-            $urlString = "http://api.openweathermap.org/data/2.5/weather?units=imperial&us&appid=" . $_ENV["OPEN_WEATHER_KEY"] . "&";
+            $urlString = "http://api.openweathermap.org/data/2.5/weather?units=imperial&us&appid=" . $openKey . "&";
             if ($paramType == "city") {
                 $urlString .= "id=" . $params;
             }
@@ -82,7 +83,7 @@ class AppController extends AbstractController
                 $urlString .= "lat=" . $coords[0] . "&lon=" . $coords[1];
             }
             else if ($paramType == "bulk") {
-                $urlString = "http://api.openweathermap.org/data/2.5/group?units=imperial&us&appid=" . $_ENV["OPEN_WEATHER_KEY"] . "&id=";
+                $urlString = "http://api.openweathermap.org/data/2.5/group?units=imperial&us&appid=" . $openKey . "&id=";
                 $favorites = [];
                 if ($this->getUser())
                     $favorites = $this->getDoctrine()->getRepository(Favorite::class)->getFavoritesByUser($this->getUser()->getId());
@@ -111,7 +112,8 @@ class AppController extends AbstractController
      */
 
     public function geocodeLocation($params) {
-        $urlString = "https://maps.googleapis.com/maps/api/geocode/json?key=" . $_ENV["GOOGLE_GEOCODE_KEY"] . "&address=" . $params;
+        $googleKey = "AIzaSyDrjLW5bzv-_BqozBVr8kG843fVJ8OI_xw";
+        $urlString = "https://maps.googleapis.com/maps/api/geocode/json?key=" . $googleKey . "&address=" . $params;
         $guzzle = new GuzzleHttp\Client();
         $response = $guzzle->request("GET", $urlString);
         $response = json_decode($response->getBody()->getContents());
